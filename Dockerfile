@@ -7,6 +7,8 @@ RUN apt-get update
 RUN apt-get build-dep -y ocaml-nox
 RUN apt-get install -y emacs24
 COPY build-dsc.sh /usr/bin/build-dsc
+RUN mkdir /root/build
+WORKDIR /root/build
 RUN build-dsc http://http.debian.net/debian/pool/main/o/ocaml/ocaml_4.02.3-6.dsc ocaml-4.02.3
 RUN build-dsc http://http.debian.net/debian/pool/main/c/camlp4/camlp4_4.02.1+3-2.dsc camlp4-4.02.1+3
 RUN apt-get install -y tex-common
@@ -38,4 +40,5 @@ RUN build-dsc http://http.debian.net/debian/pool/main/d/dose3/dose3_5.0-1.dsc do
 RUN build-dsc http://http.debian.net/debian/pool/main/c/cmdliner/cmdliner_0.9.8-1.dsc cmdliner-0.9.8
 RUN apt-get build-dep -y opam
 RUN build-dsc http://mirror.vorboss.net/debian/pool/main/o/opam/opam_1.2.2-5.dsc opam-1.2.2
+RUN tar -zcvf /root/build.tgz .
 RUN echo TODO: install a debian repo and copy out the debs that have been built here
