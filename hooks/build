@@ -1,0 +1,9 @@
+#!/bin/sh -ex
+
+docker build --rm --force-rm -t fullbuild .
+docker run -d --name newbase debian:stable tail -f /dev/null
+docker cp /root/build.tgz newbase:/root/build.tgz
+docker exec newbase tar -C /root -zxvf /root/build.tgz
+docker commit newbase $IMAGE_NAME
+docker rm -f newbase || true
+docker rmi fullbuild
